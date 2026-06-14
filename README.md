@@ -1,108 +1,387 @@
-# 📱 Telco Customer Churn Prediction Platform
-[![MLflow](https://shields.io)](https://mlflow.org)
-[![FastAPI](https://shields.io)](https://tiangolo.com)
-[![Gradio](https://shields.io)](https://gradio.app)
-[![Docker](https://shields.io)](https://docker.com)
-[![AWS](https://shields.io)](https://amazon.com)
-[![CI/CD](https://shields.io)](https://github.com)
+# Telco Customer Churn Prediction Platform
 
-A production-grade, fully automated machine learning solution that predicts telecom customer churn. This project moves beyond local Jupyter notebooks into a fully operationalized cloud environment—featuring automated model tracking, a containerized REST API, an interactive web UI, a robust CI/CD pipeline, and serverless AWS orchestration.
----## 🎯 Value Proposition & Core Benefits* **Data-Driven Retention:** Instantly identifies high-risk customers, allowing customer success teams to deploy retention strategies before churn occurs.* **Operationalized ML:** Eliminates code-level dependencies for end-users by exposing predictions through a clean REST API and a shareable web interface.* **Repeatable & Reliable Delivery:** Leverages infrastructure-as-code principles, Docker containers, and CI/CD pipelines to guarantee identical environments across development and production.* **Auditability & Traceability:** Tracks every single training run, metric, hyperparameter, and model artifact via MLflow for total reproducibility.
----## 🏗️ System Architecture
+**XGBoost • MLflow • FastAPI • Gradio • Docker • GitHub Actions • CI/CD**
 
-🌐 USER TRAFFIC
+A production-oriented machine learning platform that predicts telecom customer churn using an XGBoost classification model. The project demonstrates the complete machine learning lifecycle, including feature engineering, experiment tracking, model serving, containerization, and automated CI/CD deployment workflows.
+
+Unlike traditional notebook-based ML projects, this platform exposes predictions through REST APIs and an interactive web application, enabling real-time inference and deployment-ready operation.
+
+---
+
+# 🎯 Business Value
+
+Customer churn is one of the most critical challenges faced by telecom organizations. Identifying customers likely to leave enables businesses to take proactive retention actions before revenue loss occurs.
+
+### Key Benefits
+
+* Predict customer churn risk in real time.
+* Support data-driven customer retention strategies.
+* Reduce customer acquisition costs.
+* Provide explainable insights into churn-driving factors.
+* Enable scalable deployment through containerized infrastructure.
+
+---
+
+# 🏗 System Architecture
+
+```text
+                    User Requests
+                           │
+                           ▼
+               ┌─────────────────────┐
+               │     FastAPI API     │
+               │                     │
+               │  GET  /             │
+               │  POST /predict      │
+               └──────────┬──────────┘
+                          │
+         ┌────────────────┴───────────────┐
+         ▼                                ▼
+ ┌─────────────────┐           ┌──────────────────┐
+ │   Gradio UI     │           │ Prediction Engine │
+ │      /ui        │◄────────► │ XGBoost Model     │
+ └─────────────────┘           └─────────┬────────┘
+                                         │
+                                         ▼
+                           ┌────────────────────────┐
+                           │ MLflow Model Artifacts │
+                           │ Preprocessing Pipeline │
+                           └────────────────────────┘
+                                         │
+                                         ▼
+                                Docker Container
+                                         │
+                                         ▼
+                             GitHub Actions CI/CD
+                                         │
+                                         ▼
+                                    Docker Hub
+```
+
+---
+
+# ⚙️ Technology Stack
+
+## Machine Learning
+
+* XGBoost
+* Scikit-Learn
+* Pandas
+* NumPy
+
+## Experiment Tracking
+
+* MLflow
+* Model Versioning
+* Artifact Management
+
+## Backend
+
+* FastAPI
+* Uvicorn
+
+## Frontend
+
+* Gradio
+
+## MLOps & Deployment
+
+* Docker
+* GitHub Actions
+* Docker Hub
+* CI/CD Automation
+
+---
+
+# 📊 Model Performance
+
+### XGBoost Classifier
+
+| Metric    | Score  |
+| --------- | ------ |
+| Precision | 49.04% |
+| Recall    | 82.09% |
+| F1-Score  | 61.40% |
+| ROC-AUC   | 83.67% |
+
+### Performance Analysis
+
+* High Recall minimizes missed churn-risk customers.
+* Strong ROC-AUC demonstrates effective customer separation.
+* Optimized for business scenarios where identifying potential churners is more important than maximizing precision.
+
+---
+
+# 📁 Project Structure
+
+```text
+Telco-Customer-Churn-ML
 │
-▼
-┌──────────────┐
-│ Port 80 │ Application Load Balancer (ALB)
-└──────┬───────┘
-│ (Forwards to Port 8000)
-▼
-┌─────────────────────────────────────────────────────────┐
-│ AWS ECS FARGATE (Serverless Container Task) │
-│ │
-│ ┌─────────────────┐ ┌────────────────────────┐ │
-│ │ FastAPI App │ │ Gradio Web UI │ │
-│ │ (/predict) │◄─────►│ (/ui) │ │
-│ └────────┬────────┘ └────────────────────────┘ │
-│ │ │
-│ ▼ │
-│ ┌────────────────────────┐ │
-│ │ Engineered XGBoost │ │
-│ │ Serialized MLflow Model│ │
-│ └────────────────────────┘ │
-└─────────────────────────────────────────────────────────┘ [1] 
-
-
-### Technical Stack Details
-* **Data & Modeling:** Custom Python feature-engineering pipelines coupled with an **XGBoost Classifier**.
-* **Experiment Tracking:** **MLflow** handles experiment logging, metrics tracking, and model serialization.
-* **Inference Layer:** **FastAPI** powers the production backend, serving a `GET /` health check and a `POST /predict` interface.
-* **Frontend Interface:** **Gradio** is mounted natively inside the FastAPI application at `/ui` for manual model validation and prototyping.
-* **Containerization:** **Docker** packages the application with a highly optimized Uvicorn production server configuration.
-* **CI/CD Pipeline:** **GitHub Actions** triggers automatically on code changes to build, test, and push the runtime container.
-* **Cloud Orchestration:** **AWS ECS Fargate** runs the serverless tasks, safely abstracted behind an **Application Load Balancer (ALB)** and isolated Network Security Groups.
-* **Observability:** **AWS CloudWatch Logs** centralizes application `stdout`/`stderr` outputs and system events.
+├── notebooks/
+│   └── Exploratory analysis and experimentation
+│
+├── scripts/
+│   └── Data processing and training automation
+│
+├── src/
+│   ├── app/
+│   │   ├── main.py
+│   │   └── FastAPI application
+│   │
+│   ├── serving/
+│   │   ├── prediction pipeline
+│   │   ├── preprocessing logic
+│   │   └── model artifacts
+│   │
+│   └── training/
+│       └── model training workflow
+│
+├── mlruns/
+│   └── MLflow experiments
+│
+├── Dockerfile
+├── requirements.txt
+├── README.md
+└── .github/
+    └── workflows/
+        └── ci.yml
+```
 
 ---
 
-## 🚀 Deployment & Automated Traffic Flow
+# 🚀 Core Features
 
-1. **Continuous Integration:** A developer pushes new code or model configurations to the `main` branch.
-2. **Automated Build:** GitHub Actions compiles the application, runs integration checks, packages it into a Docker image, and hosts it on Docker Hub.
-3. **Continuous Deployment:** The pipeline triggers an AWS ECS service update, signaling Fargate to pull the fresh container image.
-4. **Zero-Downtime Health Checks:** The Application Load Balancer continuously pings `GET /` on port 8000. It routes live user traffic from port 80 to the new container task only after it passes all health parameters.
+## Automated Experiment Tracking
 
----
+MLflow records:
 
-## 🛠️ Engineering Roadblocks & Production Solutions
+* Hyperparameters
+* Metrics
+* Model artifacts
+* Experiment history
 
-During development and deployment, several real-world production challenges were identified and engineered through:
-
-### 💡 Load Balancer Health Check Failures
-* **The Issue:** The target group registered containers as unhealthy due to port mismatches and missing target targets.
-* **The Fix:** Implemented an explicit `GET /` health endpoint in FastAPI. Configured the ALB listener on port 80 to forward precisely to Target Group port 8000.
-
-### 💡 Container Import Paths (`ModuleNotFoundError`)
-* **The Issue:** The containerized application failed at startup because Python could not resolve internal application paths.
-* **The Fix:** Configured `PYTHONPATH=/app/src` natively inside the Dockerfile and standardized the Uvicorn entry point to launch from `src.app.main:app`.
-
-### 💡 Network Isolation & Timeouts
-* **The Issue:** Public traffic hitting the ALB DNS address resulted in connection timeouts.
-* **The Fix:** Reconfigured AWS Security Groups to limit exposure. The ALB allows inbound traffic over port 80 from anywhere (`0.0.0.0/0`), while the ECS task limits inbound traffic over port 8000 strictly to origin requests arriving from the ALB Security Group.
-
-### 💡 Stale Deployments on ECS
-* **The Issue:** Updating images on the container registry did not automatically cycle out active tasks on AWS.
-* **The Fix:** Integrated a forced new deployment step (`force-new-deployment`) into the automated deployment script to guarantee immediate task updates.
-
-### 💡 Gradio UI Error (“No runs found in experiment”)
-* **The Issue:** The inference/UI expected an MLflow-logged model but could not resolve a run inside the container environment.
-* **The Fix:** Standardized the MLflow experiment name and model logging in training. The inference layer loads the logged model consistently while maintaining a local fallback path for development.
-
-### 💡 Environment-Agnostic Artifact Paths
-* **The Issue:** Divergent MLflow artifact storage paths caused file resolution errors when shifting from local development to production.
-* **The Fix:** Built dynamic model paths into the core framework. The application falls back gracefully to standard local directories (`./mlruns/...`) during development, but utilizes tightly packaged image artifacts inside production containers.
+This ensures complete reproducibility of model training.
 
 ---
 
-## 🧑‍💻 Local Quickstart
+## Production API Layer
 
-### Prerequisites
-* Docker installed locally
-* Python 3.10+ (if running bare-metal)
+FastAPI exposes the trained model through REST endpoints.
 
-### Running with Docker
+### Health Endpoint
+
+```http
+GET /
+```
+
+### Prediction Endpoint
+
+```http
+POST /predict
+```
+
+Enables integration with:
+
+* Web applications
+* Dashboards
+* Mobile applications
+* Enterprise systems
+
+---
+
+## Interactive Gradio Interface
+
+A Gradio application is mounted directly inside FastAPI.
+
+Accessible through:
+
+```text
+http://localhost:8000/ui
+```
+
+Allows:
+
+* Manual testing
+* Rapid validation
+* Demonstrations
+* Stakeholder feedback
+
+---
+
+# 🐳 Docker Containerization
+
+The application is fully containerized using Docker.
+
+### Benefits
+
+* Environment consistency
+* Simplified deployment
+* Dependency isolation
+* Improved reproducibility
+
+### Build Image
+
 ```bash
-# 1. Clone the repository
-git clone https://github.com
-cd telco-churn-mlops
-
-# 2. Build the production Docker image
 docker build -t telco-churn-app .
+```
 
-# 3. Run the container locally
+### Run Container
+
+```bash
 docker run -p 8000:8000 telco-churn-app
 ```
-Once started, navigate to:
-* **API Documentation:** `http://localhost:8000/docs`
-* **Interactive UI:** `http://localhost:8000/ui`
+
+---
+
+# 🔄 CI/CD Pipeline
+
+GitHub Actions automates deployment workflows.
+
+### Pipeline Flow
+
+```text
+Code Push
+    │
+    ▼
+GitHub Actions
+    │
+    ▼
+Docker Build
+    │
+    ▼
+Docker Hub Authentication
+    │
+    ▼
+Docker Image Push
+    │
+    ▼
+Deployment Ready Artifact
+```
+
+### Automated Steps
+
+* Source code checkout
+* Docker image build
+* Dependency validation
+* Docker Hub authentication
+* Image publishing
+
+---
+
+# 🛠 Engineering Challenges & Solutions
+
+## Dependency Version Conflicts
+
+### Challenge
+
+Package incompatibilities caused container build failures.
+
+### Solution
+
+Resolved version conflicts involving:
+
+* Gradio
+* Pillow
+* MarkupSafe
+
+and standardized dependency versions.
+
+---
+
+## Docker Runtime Errors
+
+### Challenge
+
+Container startup failures due to missing modules and import path issues.
+
+### Solution
+
+Refactored Docker configuration and standardized application startup procedures.
+
+---
+
+## MLflow Artifact Resolution
+
+### Challenge
+
+Model artifacts were not consistently located across environments.
+
+### Solution
+
+Implemented robust artifact-loading logic and standardized MLflow experiment management.
+
+---
+
+## CI/CD Authentication Issues
+
+### Challenge
+
+GitHub Actions failed during Docker Hub authentication.
+
+### Solution
+
+Configured secure authentication using:
+
+* Docker Personal Access Tokens
+* GitHub Secrets
+* Automated workflow validation
+
+---
+
+# 📚 Local Quick Start
+
+## Clone Repository
+
+```bash
+git clone <repository-url>
+cd Telco-Customer-Churn-ML
+```
+
+## Build Container
+
+```bash
+docker build -t telco-churn-app .
+```
+
+## Run Container
+
+```bash
+docker run -p 8000:8000 telco-churn-app
+```
+
+---
+
+# 🌐 Access the Application
+
+### API Documentation
+
+```text
+http://localhost:8000/docs
+```
+
+### Interactive Interface
+
+```text
+http://localhost:8000/ui
+```
+
+---
+
+# 🔮 Future Enhancements
+
+* Cloud deployment (AWS/Azure/GCP)
+* Model monitoring and drift detection
+* Batch inference workflows
+* Automated retraining pipelines
+* Explainable AI integration
+* User authentication and access control
+
+---
+
+# 👩‍💻 Author
+
+**Samiksha Hujare**
+
+B.Tech Computer Science & Engineering (Data Science)
+
+Machine Learning • MLOps • Data Science • AI Systems
