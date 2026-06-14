@@ -1,62 +1,206 @@
-# Telco Customer Churn Prediction Platform
+# 🚀 Telco Customer Churn Prediction Platform
 
-**XGBoost • MLflow • FastAPI • Gradio • Docker • GitHub Actions • CI/CD**
+### Production-Ready MLOps System for Real-Time Customer Churn Prediction
 
-A production-oriented machine learning platform that predicts telecom customer churn using an XGBoost classification model. The project demonstrates the complete machine learning lifecycle, including feature engineering, experiment tracking, model serving, containerization, and automated CI/CD deployment workflows.
-
-Unlike traditional notebook-based ML projects, this platform exposes predictions through REST APIs and an interactive web application, enabling real-time inference and deployment-ready operation.
-
----
-
-# 🎯 Business Value
-
-Customer churn is one of the most critical challenges faced by telecom organizations. Identifying customers likely to leave enables businesses to take proactive retention actions before revenue loss occurs.
-
-### Key Benefits
-
-* Predict customer churn risk in real time.
-* Support data-driven customer retention strategies.
-* Reduce customer acquisition costs.
-* Provide explainable insights into churn-driving factors.
-* Enable scalable deployment through containerized infrastructure.
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![XGBoost](https://img.shields.io/badge/XGBoost-ML-orange)
+![FastAPI](https://img.shields.io/badge/FastAPI-API-green)
+![Docker](https://img.shields.io/badge/Docker-Container-blue)
+![AWS ECS](https://img.shields.io/badge/AWS-ECS_Fargate-orange)
+![AWS ECR](https://img.shields.io/badge/AWS-ECR-yellow)
+![GitHub Actions](https://img.shields.io/badge/CI/CD-GitHub_Actions-success)
+![CloudWatch](https://img.shields.io/badge/AWS-CloudWatch-red)
 
 ---
 
-# 🏗 System Architecture
+# 🌐 Live Demo
+
+### Production Application
 
 ```text
-                    User Requests
-                           │
-                           ▼
-               ┌─────────────────────┐
-               │     FastAPI API     │
-               │                     │
-               │  GET  /             │
-               │  POST /predict      │
-               └──────────┬──────────┘
-                          │
-         ┌────────────────┴───────────────┐
-         ▼                                ▼
- ┌─────────────────┐           ┌──────────────────┐
- │   Gradio UI     │           │ Prediction Engine │
- │      /ui        │◄────────► │ XGBoost Model     │
- └─────────────────┘           └─────────┬────────┘
-                                         │
-                                         ▼
-                           ┌────────────────────────┐
-                           │ MLflow Model Artifacts │
-                           │ Preprocessing Pipeline │
-                           └────────────────────────┘
-                                         │
-                                         ▼
-                                Docker Container
-                                         │
-                                         ▼
-                             GitHub Actions CI/CD
-                                         │
-                                         ▼
-                                    Docker Hub
+http://telco-churn-alb-80477066.eu-north-1.elb.amazonaws.com/ui/
 ```
+
+### API Documentation
+
+```text
+http://telco-churn-alb-80477066.eu-north-1.elb.amazonaws.com/docs
+```
+
+---
+
+# 📌 Project Overview
+
+This project is a production-grade machine learning platform designed to predict customer churn in the telecommunications industry.
+
+The system leverages an XGBoost classification model and exposes real-time predictions through a FastAPI backend and interactive Gradio web interface.
+
+The entire application is containerized with Docker, deployed on AWS ECS Fargate, and automatically updated through a GitHub Actions CI/CD pipeline.
+
+Unlike traditional notebook-based machine learning projects, this solution demonstrates the complete ML lifecycle from model development to cloud deployment and production monitoring.
+
+---
+
+# 🏗️ Cloud Architecture
+
+![Architecture](assets/architecture.png)
+
+### Request Flow
+
+```text
+User
+ │
+ ▼
+Application Load Balancer (AWS ALB)
+ │
+ ▼
+AWS ECS Fargate Service
+ │
+ ▼
+Docker Container
+ │
+ ├── FastAPI REST API
+ ├── Gradio Web Interface
+ └── XGBoost Prediction Engine
+ │
+ ▼
+Prediction Response
+```
+
+---
+
+# 🔄 CI/CD Pipeline
+
+```text
+Developer Push
+      │
+      ▼
+GitHub Repository
+      │
+      ▼
+GitHub Actions
+      │
+      ▼
+Docker Image Build
+      │
+      ▼
+AWS Elastic Container Registry (ECR)
+      │
+      ▼
+AWS ECS Fargate Deployment
+      │
+      ▼
+Production Environment
+```
+
+### Automated Workflow
+
+* Source Code Validation
+* Docker Image Build
+* Container Registry Push
+* ECS Deployment
+* Service Update
+* Cloud Deployment
+
+---
+
+# 📸 Application Screenshots
+
+## Customer Churn Prediction Dashboard
+
+![UI](assets/web-ui.png)
+
+---
+
+## Prediction Example – High Churn Risk
+
+![Positive](assets/prediction-positive.png)
+
+---
+
+## Prediction Example – Low Churn Risk
+
+![Negative](assets/prediction-negative.png)
+
+---
+
+## Interactive API Documentation
+
+![Swagger](assets/swagger-docs.png)
+
+---
+
+## AWS Production Deployment
+
+![AWS Deployment](assets/aws-deployment.png)
+
+---
+
+# 🎯 Business Problem
+
+Customer churn directly impacts revenue and customer acquisition costs.
+
+This system helps businesses:
+
+* Detect high-risk customers early
+* Improve customer retention strategies
+* Reduce revenue loss
+* Support proactive marketing campaigns
+* Enable data-driven decision making
+
+---
+
+# 🤖 Machine Learning Pipeline
+
+### Model
+
+XGBoost Classifier
+
+### Data Processing
+
+* Missing Value Handling
+* Feature Encoding
+* Feature Engineering
+* Data Validation
+* Model Serialization
+
+### Input Features
+
+* Gender
+* Partner
+* Dependents
+* Phone Service
+* Multiple Lines
+* Internet Service
+* Online Security
+* Online Backup
+* Device Protection
+* Tech Support
+* Streaming TV
+* Streaming Movies
+* Contract
+* Paperless Billing
+* Payment Method
+* Tenure
+* Monthly Charges
+* Total Charges
+
+---
+
+# 📈 Model Performance
+
+| Metric    | Score  |
+| --------- | ------ |
+| Precision | 49.04% |
+| Recall    | 82.09% |
+| F1 Score  | 61.40% |
+| ROC-AUC   | 83.67% |
+
+### Key Insight
+
+The model is optimized for customer retention use cases where identifying churn-risk customers is more valuable than maximizing precision.
+
+A recall score above 82% ensures most potential churners are detected before customer loss occurs.
 
 ---
 
@@ -69,12 +213,6 @@ Customer churn is one of the most critical challenges faced by telecom organizat
 * Pandas
 * NumPy
 
-## Experiment Tracking
-
-* MLflow
-* Model Versioning
-* Artifact Management
-
 ## Backend
 
 * FastAPI
@@ -84,95 +222,57 @@ Customer churn is one of the most critical challenges faced by telecom organizat
 
 * Gradio
 
-## MLOps & Deployment
+## Experiment Tracking
+
+* MLflow
+
+## Containerization
 
 * Docker
+
+## Cloud Infrastructure
+
+* AWS ECS Fargate
+* AWS ECR
+* AWS Application Load Balancer
+* AWS CloudWatch
+
+## DevOps
+
 * GitHub Actions
-* Docker Hub
 * CI/CD Automation
 
 ---
 
-# 📊 Model Performance
-
-### XGBoost Classifier
-
-| Metric    | Score  |
-| --------- | ------ |
-| Precision | 49.04% |
-| Recall    | 82.09% |
-| F1-Score  | 61.40% |
-| ROC-AUC   | 83.67% |
-
-### Performance Analysis
-
-* High Recall minimizes missed churn-risk customers.
-* Strong ROC-AUC demonstrates effective customer separation.
-* Optimized for business scenarios where identifying potential churners is more important than maximizing precision.
-
----
-
-# 📁 Project Structure
+# 📂 Repository Structure
 
 ```text
 Telco-Customer-Churn-ML
 │
+├── .github/
+│   └── workflows/
+│       └── CI/CD Pipeline
+│
+├── assets/
+│   ├── architecture.png
+│   ├── web-ui.png
+│   ├── swagger-docs.png
+│   ├── aws-deployment.png
+│   ├── prediction-positive.png
+│   └── prediction-negative.png
+│
 ├── notebooks/
-│   └── Exploratory analysis and experimentation
-│
 ├── scripts/
-│   └── Data processing and training automation
-│
 ├── src/
-│   ├── app/
-│   │   ├── main.py
-│   │   └── FastAPI application
-│   │
-│   ├── serving/
-│   │   ├── prediction pipeline
-│   │   ├── preprocessing logic
-│   │   └── model artifacts
-│   │
-│   └── training/
-│       └── model training workflow
-│
-├── mlruns/
-│   └── MLflow experiments
 │
 ├── Dockerfile
 ├── requirements.txt
-├── README.md
-└── .github/
-    └── workflows/
-        └── ci.yml
+└── README.md
 ```
 
 ---
 
-# 🚀 Core Features
-
-## Automated Experiment Tracking
-
-MLflow records:
-
-* Hyperparameters
-* Metrics
-* Model artifacts
-* Experiment history
-
-This ensures complete reproducibility of model training.
-
----
-
-## Production API Layer
-
-FastAPI exposes the trained model through REST endpoints.
-
-### Health Endpoint
-
-```http
-GET /
-```
+# 🔌 REST API
 
 ### Prediction Endpoint
 
@@ -180,208 +280,111 @@ GET /
 POST /predict
 ```
 
-Enables integration with:
+### Example Request
 
-* Web applications
-* Dashboards
-* Mobile applications
-* Enterprise systems
-
----
-
-## Interactive Gradio Interface
-
-A Gradio application is mounted directly inside FastAPI.
-
-Accessible through:
-
-```text
-http://localhost:8000/ui
+```json
+{
+  "gender": "Female",
+  "Partner": "No",
+  "Dependents": "No",
+  "PhoneService": "Yes",
+  "MultipleLines": "No",
+  "InternetService": "Fiber optic",
+  "OnlineSecurity": "No",
+  "OnlineBackup": "No",
+  "DeviceProtection": "No",
+  "TechSupport": "No",
+  "StreamingTV": "Yes",
+  "StreamingMovies": "Yes",
+  "Contract": "Month-to-month",
+  "PaperlessBilling": "Yes",
+  "PaymentMethod": "Electronic check",
+  "tenure": 2,
+  "MonthlyCharges": 95.5,
+  "TotalCharges": 191.0
+}
 ```
 
-Allows:
+### Example Response
 
-* Manual testing
-* Rapid validation
-* Demonstrations
-* Stakeholder feedback
-
----
-
-# 🐳 Docker Containerization
-
-The application is fully containerized using Docker.
-
-### Benefits
-
-* Environment consistency
-* Simplified deployment
-* Dependency isolation
-* Improved reproducibility
-
-### Build Image
-
-```bash
-docker build -t telco-churn-app .
-```
-
-### Run Container
-
-```bash
-docker run -p 8000:8000 telco-churn-app
+```json
+{
+  "prediction": "Likely to churn"
+}
 ```
 
 ---
 
-# 🔄 CI/CD Pipeline
+# ☁️ AWS Deployment Highlights
 
-GitHub Actions automates deployment workflows.
+### Infrastructure Components
 
-### Pipeline Flow
+* AWS ECS Fargate
+* Application Load Balancer
+* AWS ECR
+* AWS CloudWatch
+* Security Groups
+* VPC Networking
 
-```text
-Code Push
-    │
-    ▼
-GitHub Actions
-    │
-    ▼
-Docker Build
-    │
-    ▼
-Docker Hub Authentication
-    │
-    ▼
-Docker Image Push
-    │
-    ▼
-Deployment Ready Artifact
-```
+### Production Features
 
-### Automated Steps
-
-* Source code checkout
-* Docker image build
-* Dependency validation
-* Docker Hub authentication
-* Image publishing
+* Containerized Deployment
+* Public API Access
+* Load Balancing
+* Health Checks
+* Centralized Logging
+* Automated Deployments
 
 ---
 
-# 🛠 Engineering Challenges & Solutions
+# 💡 Engineering Challenges Solved
 
-## Dependency Version Conflicts
+### Docker Dependency Issues
 
-### Challenge
+Resolved package conflicts and container runtime failures.
 
-Package incompatibilities caused container build failures.
+### MLflow Artifact Loading
 
-### Solution
+Implemented reliable model loading inside containers.
 
-Resolved version conflicts involving:
+### ECS Deployment
 
-* Gradio
-* Pillow
-* MarkupSafe
+Configured production deployment using AWS ECS Fargate and ALB.
 
-and standardized dependency versions.
+### CI/CD Automation
 
----
+Built a GitHub Actions workflow for automated image build and deployment.
 
-## Docker Runtime Errors
+### Cloud Monitoring
 
-### Challenge
-
-Container startup failures due to missing modules and import path issues.
-
-### Solution
-
-Refactored Docker configuration and standardized application startup procedures.
+Integrated CloudWatch logs for production observability.
 
 ---
 
-## MLflow Artifact Resolution
+# 🎓 Skills Demonstrated
 
-### Challenge
-
-Model artifacts were not consistently located across environments.
-
-### Solution
-
-Implemented robust artifact-loading logic and standardized MLflow experiment management.
-
----
-
-## CI/CD Authentication Issues
-
-### Challenge
-
-GitHub Actions failed during Docker Hub authentication.
-
-### Solution
-
-Configured secure authentication using:
-
-* Docker Personal Access Tokens
-* GitHub Secrets
-* Automated workflow validation
-
----
-
-# 📚 Local Quick Start
-
-## Clone Repository
-
-```bash
-git clone <repository-url>
-cd Telco-Customer-Churn-ML
-```
-
-## Build Container
-
-```bash
-docker build -t telco-churn-app .
-```
-
-## Run Container
-
-```bash
-docker run -p 8000:8000 telco-churn-app
-```
-
----
-
-# 🌐 Access the Application
-
-### API Documentation
-
-```text
-http://localhost:8000/docs
-```
-
-### Interactive Interface
-
-```text
-http://localhost:8000/ui
-```
-
----
-
-# 🔮 Future Enhancements
-
-* Cloud deployment (AWS/Azure/GCP)
-* Model monitoring and drift detection
-* Batch inference workflows
-* Automated retraining pipelines
-* Explainable AI integration
-* User authentication and access control
+* Machine Learning
+* XGBoost
+* MLOps
+* Model Deployment
+* FastAPI
+* Docker
+* AWS ECS Fargate
+* AWS ECR
+* CloudWatch
+* CI/CD
+* GitHub Actions
+* REST API Development
+* Production Systems Engineering
 
 ---
 
 # 👩‍💻 Author
 
-**Samiksha Hujare**
+## Samiksha Hujare
 
 B.Tech Computer Science & Engineering (Data Science)
 
-Machine Learning • MLOps • Data Science • AI Systems
+Machine Learning | MLOps | Data Science | Cloud Deployment | AI Systems
+
+
